@@ -6,3 +6,18 @@ Untuk copypaste sendiri yang harus dilakukan adalah bagian git clone atau git pu
 
 ## 7. Apa manfaat GitHub bagi startup?
 Memudahkan developer untuk menguji file terbaru mereka melalui update file tanpa perlu sebar luaskan secara manual yang berulang contoh saya membuat file dan ingin update maka saya harus upload kedalam github yang otomatis menyebar kesemua perangkat user tanpa harus mengetik atau upload ulang file kode saya
+
+## 8. Apa yang saya pelajari dari insiden file kosong ini?
+saya mempelajari bahwa insiden file kosong adalah insiden yang sangat wajar terjadi diindustri it terutama koding aplikasi akan tetapi tidak boleh dianggap remeh karena kurangnya kode didalam file akan menentukan masa depan sebuah aplikasi 
+
+## 9. Bagaimana cara menghindari kejadian serupa?
+terutama jangan panik, gunakan refrensi lain seperti ai untuk mempelajari cara menanggulanginya dan harus melakukan backup secara fisik dan nonfisik agar kode didalam file tetap aman
+
+## 10. Mengapa kita perlu backup fisik (flashdisk) selain GitHub?
+melakukan backup fisik adalah hal yang sangat diharuskan agar menghindari kejadian seperti pengakuan tidak sah ataupun pencurian data pada intinya backup fisik dilakukan agar jika ada insiden pencurian data maka data asli tidak akan hilang
+
+## 11. Mengapa `.env` tidak boleh di-commit ke GitHub?
+karena file .env berisi kode rahasia sebuah aplikasi dan tidak boleh disebarluaskan agar menghindari plagiarisme dan pencurian data 
+
+## 12. Apa yang harus dilakukan jika token sudah terlanjur ter-push?
+harus melakukan revoke pada botfather atau lainnya untuk menonaktifkan kode token yang lama dan memperbarui kode token yang baru 
