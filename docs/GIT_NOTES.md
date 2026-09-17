@@ -1,0 +1,8 @@
+## 5. Apa yang saya pelajari dari proses setup Git ini?
+Yang saya pelajari dari proses ini adalah bagaimana sebuah komputer bisa berjalan dengan seimbang dengan kemampuan manusia yang terbatas jadi kesimpulannya adalah jika laptop saya tidak saya setup maka saya akan mencari filenya satu per satu dan itu sangat rumit dan melelahkan dan dengan adanya setup ini saya dapat mengubah atau menambahkan kode tanpa harus upload manual kedalam github alias mempermudah saya untuk melakukan maintenance dan update jika terjadi bug terhadap produk saya
+
+## 6. Mengapa kita tidak bisa hanya copy-paste folder ke perangkat lain?
+Untuk copypaste sendiri yang harus dilakukan adalah bagian git clone atau git pull dan database walaupun harus dicopy paste secara manual dan sisanya seperti File Environment (.env) dan Virtual Environment harus dibuat ulang karena agar user mengetahui bahwa sang developer sudah mengganti perangkat dengan yang baru yang pastinya membuat user merasa lebih aman dengan sistem keamanannya dan untuk File Log (.log) tidak perlu dilakukan perubahan karena file tersebut sudah bagian dari sistem kerja file yang kurang membutuhkan perawatan
+
+## 7. Apa manfaat GitHub bagi startup?
+Memudahkan developer untuk menguji file terbaru mereka melalui update file tanpa perlu sebar luaskan secara manual yang berulang contoh saya membuat file dan ingin update maka saya harus upload kedalam github yang otomatis menyebar kesemua perangkat user tanpa harus mengetik atau upload ulang file kode saya
