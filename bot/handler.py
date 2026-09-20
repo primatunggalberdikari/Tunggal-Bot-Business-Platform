@@ -6,6 +6,7 @@ Menggunakan OOP dengan class BotHandler.
 
 import logging
 import random
+from turtle import update
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     Application,
@@ -64,8 +65,34 @@ class BotHandler:
     # ============================================================
     async def _start_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         """Handler untuk command /start."""
-        nama = update.effective_user.first_name or "Kak"
-        await update.message.reply_text(
+        user = update.effective_user
+        chat_id = str(update.effective_chat.id)
+        nama = user.first_name or "Kak"
+        
+        # Import di dalam method untuk hindari circular import
+        from database.repository import TenantRepository
+        from database.seed import DatabaseSeeder
+        
+        # Dapatkan atau buat tenant
+        tenant_repo = TenantRepository()
+        try:
+            tenant = tenant_repo.get_by_chat_id(chat_id)
+            
+            if tenant is None:
+                # Tenant baru — buat dan seed data default
+                logger.info(f"Tenant baru: chat_id={chat_id}, name={nama}")
+                tenant = tenant_repo.get_or_create(chat_id, nama)
+                
+                # Seed data default untuk tenant baru
+                session = tenant_repo._session
+                seeder = DatabaseSeeder(session)
+                seeder.seed_default_data(tenant)
+                
+                logger.info(f"Tenant {tenant.id} selesai di-seed")
+        finally:
+            tenant_repo.close()
+        
+        welcome_message = (
             f"Halo *{nama}*! 👋\n\n"
             "Selamat datang di *Tunggal Bot Bisnis* — asisten AI yang siap bantu "
             "bisnis Anda tumbuh 24 jam nonstop! 🤖\n\n"
@@ -75,9 +102,10 @@ class BotHandler:
             "• Cek jam operasional → ketik `jam`\n"
             "• Hubungi admin → ketik `kontak`\n\n"
             "Ketik /help untuk daftar lengkap perintah.\n"
-            "Yuk, mulai! Mau tanya apa hari ini? 😊",
-            parse_mode="Markdown",
+            "Yuk, mulai! Mau tanya apa hari ini? 😊"
         )
+        
+        await update.message.reply_text(welcome_message)
 
     # ============================================================
     # COMMAND /help
@@ -223,43 +251,292 @@ class BotHandler:
                 "• Ketik `kontak` — hubungi admin",
                 parse_mode="Markdown",
             )
+            
+            # Log percakapan
+            chat_id = str(update.effective_chat.id)
+            from database.repository import TenantRepository
+            tenant_repo = TenantRepository()
+            try:
+                tenant = tenant_repo.get_by_chat_id(chat_id)
+                if tenant:
+                    await self._log_chat(
+                        update, tenant.id,
+                        message_text=text,
+                        response_text="[sapaan]",
+                        intent="sapaan",
+                    )
+            finally:
+                tenant_repo.close()
 
         elif text == 'produk':
-            await self._show_product_menu(update)
+            chat_id = str(update.effective_chat.id)
+            from database.repository import TenantRepository
+            tenant_repo = TenantRepository()
+            try:
+                tenant = tenant_repo.get_by_chat_id(chat_id)
+                if tenant is None:
+                    await update.message.reply_text(
+                        "⚠️ Anda belum terdaftar. Silakan kirim /start dulu."
+                    )
+                    return
+                tenant_id = tenant.id
+            finally:
+                tenant_repo.close()
+            
+            await self._show_products(update, tenant_id)
+            
+            # Log percakapan
+            await self._log_chat(
+                update, tenant_id,
+                message_text=text,
+                response_text="[produk list]",
+                intent="produk",
+            )
 
         elif text == 'faq':
-            await update.message.reply_text(
-                "❓ *Pertanyaan Umum (FAQ):*\n\n"
-                "Silakan tanyakan apa saja, contoh:\n"
-                "• Bagaimana cara order?\n"
-                "• Bagaimana cara membayarnya?\n"
-                "• Apakah layanan ini aman?\n\n"
-                "Ketik pertanyaan Anda sekarang! 💬",
-                parse_mode="Markdown",
+            chat_id = str(update.effective_chat.id)
+            from database.repository import TenantRepository
+            tenant_repo = TenantRepository()
+            try:
+                tenant = tenant_repo.get_by_chat_id(chat_id)
+                if tenant is None:
+                    await update.message.reply_text(
+                        "⚠️ Anda belum terdaftar. Silakan kirim /start dulu."
+                    )
+                    return
+                tenant_id = tenant.id
+            finally:
+                tenant_repo.close()
+            
+            await self._show_faq(update, tenant_id)
+            
+            # Log percakapan
+            await self._log_chat(
+                update, tenant_id,
+                message_text=text,
+                response_text="[faq list]",
+                intent="faq",
             )
 
         elif text == 'jam':
-            await update.message.reply_text(
-                "🕒 *Jam Operasional Kami:*\n"
-                "Senin – Kamis: 09.00 – 17.00 WIB\n"
-                "Jumat & Minggu: Tutup (Libur).\n\n"
-                "Tapi tenang, bot AI ini aktif 24 jam! 🤖",
-                parse_mode="Markdown",
-            )
+            chat_id = str(update.effective_chat.id)
+            from database.repository import TenantRepository
+            tenant_repo = TenantRepository()
+            try:
+                tenant = tenant_repo.get_by_chat_id(chat_id)
+                if tenant is None:
+                    await update.message.reply_text(
+                        "⚠️ Anda belum terdaftar. Silakan kirim /start dulu."
+                    )
+                    return
+                tenant_id = tenant.id
+            finally:
+                tenant_repo.close()
+            
+            await self._show_hours(update, tenant_id)
 
         elif text == 'kontak':
-            await update.message.reply_text(
-                "📞 *Hubungi Kami:*\n"
-                "📱 WhatsApp: 0882-9468-9521\n"
-                "📧 Email: primatunggalberdikari@gmail.com\n\n"
-                "🔗 Telegram: https://t.me/prima_tunggal_bot\n"
-                "⏱️ Balas cepat maksimal 1x24 jam.",
-                parse_mode="Markdown",
-            )
+            chat_id = str(update.effective_chat.id)
+            from database.repository import TenantRepository
+            tenant_repo = TenantRepository()
+            try:
+                tenant = tenant_repo.get_by_chat_id(chat_id)
+                if tenant is None:
+                    await update.message.reply_text(
+                        "⚠️ Anda belum terdaftar. Silakan kirim /start dulu."
+                    )
+                    return
+                tenant_id = tenant.id
+            finally:
+                tenant_repo.close()
+            
+            await self._show_contacts(update, tenant_id)
 
         else:
             await self._handle_faq_ai(update, text)
+            
+            # Log percakapan
+            chat_id = str(update.effective_chat.id)
+            from database.repository import TenantRepository
+            tenant_repo = TenantRepository()
+            try:
+                tenant = tenant_repo.get_by_chat_id(chat_id)
+                if tenant:
+                    await self._log_chat(
+                        update, tenant.id,
+                        message_text=text,
+                        response_text="[faq_ai]",
+                        intent="faq_ai",
+                    )
+            finally:
+                tenant_repo.close()
 
+    async def _show_products(self, update: Update, tenant_id: int) -> None:
+        """Menampilkan produk dari database berdasarkan tenant."""
+        from database.repository import ProductRepository
+        
+        product_repo = ProductRepository()
+        try:
+            products = product_repo.get_by_tenant(tenant_id)
+            
+            if not products:
+                await update.message.reply_text(
+                    "Daftar Produk:\n\nMaaf, belum ada produk untuk Anda."
+                )
+                return
+            
+            response = "Daftar Produk Kami:\n\n"
+            for product in products:
+                response += f"📦 {product.name}\n"
+                response += f"   {product.description}\n"
+                response += f"   Rp{product.price:,.0f}\n\n"
+            
+            response += "Ketik 'kontak' untuk order!"
+            
+            await update.message.reply_text(response)
+        except Exception as e:
+            logger.error(f"Error di _show_products: {e}", exc_info=True)
+            await update.message.reply_text(
+                f"Terjadi kesalahan: {e}"
+            )
+        finally:
+            product_repo.close()
+
+    async def _show_faq(self, update: Update, tenant_id: int) -> None:
+        """Menampilkan FAQ dari database berdasarkan tenant."""
+        from database.repository import FAQRepository
+        
+        faq_repo = FAQRepository()
+        try:
+            faqs = faq_repo.get_by_tenant(tenant_id)
+            
+            if not faqs:
+                await update.message.reply_text(
+                    "Pertanyaan Umum (FAQ):\n\nMaaf, belum ada FAQ."
+                )
+                return
+            
+            response = "Pertanyaan Umum (FAQ):\n\n"
+            for faq in faqs:
+                response += f"Q: {faq.question}\n"
+                response += f"A: {faq.answer}\n\n"
+            
+            await update.message.reply_text(response)
+        except Exception as e:
+            logger.error(f"Error di _show_faq: {e}", exc_info=True)
+            await update.message.reply_text(f"Terjadi kesalahan: {e}")
+        finally:
+            faq_repo.close()
+
+    async def _show_hours(self, update: Update, tenant_id: int) -> None:
+        """Menampilkan jam operasional dari database."""
+        from database.connection import db_manager
+        from models.business_hours import BusinessHours
+        
+        session = db_manager.get_session()
+        try:
+            hours = session.query(BusinessHours).filter(
+                BusinessHours.tenant_id == tenant_id
+            ).order_by(BusinessHours.day_of_week).all()
+            
+            if not hours:
+                await update.message.reply_text(
+                    "Jam Operasional:\n\nMaaf, belum ada data."
+                )
+                return
+            
+            # Map hari
+            day_names = {
+                0: "Senin", 1: "Selasa", 2: "Rabu", 3: "Kamis",
+                4: "Jumat", 5: "Sabtu", 6: "Minggu"
+            }
+            
+            response = "Jam Operasional Kami:\n\n"
+            for h in hours:
+                day = day_names.get(h.day_of_week, "?")
+                if h.is_closed:
+                    response += f"{day}: Tutup\n"
+                else:
+                    response += f"{day}: {h.open_time} - {h.close_time}\n"
+            
+            response += "\nTapi bot AI ini aktif 24 jam!"
+            await update.message.reply_text(response)
+        except Exception as e:
+            logger.error(f"Error di _show_hours: {e}", exc_info=True)
+            await update.message.reply_text(f"Terjadi kesalahan: {e}")
+        finally:
+            session.close()
+
+    async def _show_contacts(self, update: Update, tenant_id: int) -> None:
+        """Menampilkan kontak dari database."""
+        from database.connection import db_manager
+        from models.contact import Contact
+        
+        session = db_manager.get_session()
+        try:
+            contacts = session.query(Contact).filter(
+                Contact.tenant_id == tenant_id
+            ).order_by(Contact.order).all()
+            
+            if not contacts:
+                await update.message.reply_text(
+                    "Kontak Kami:\n\nMaaf, belum ada data kontak."
+                )
+                return
+            
+            response = "Hubungi Kami:\n\n"
+            for c in contacts:
+                label = c.label or c.type.capitalize()
+                response += f"{label}: {c.value}\n"
+            
+            response += "\nBalas cepat maksimal 1x24 jam."
+            await update.message.reply_text(response)
+        except Exception as e:
+            logger.error(f"Error di _show_contacts: {e}", exc_info=True)
+            await update.message.reply_text(f"Terjadi kesalahan: {e}")
+        finally:
+            session.close()
+
+    async def _log_chat(
+        self,
+        update: Update,
+        tenant_id: int,
+        message_text: str,
+        response_text: str = "",
+        intent: str = "",
+    ) -> None:
+        """
+        Menyimpan log percakapan ke database.
+        
+        Args:
+            update: Update dari Telegram
+            tenant_id: ID tenant
+            message_text: Pesan dari user
+            response_text: Respon bot
+            intent: Klasifikasi intent (produk, faq, dll)
+        """
+        from database.connection import db_manager
+        from models.chat_log import ChatLog
+        
+        user = update.effective_user
+        session = db_manager.get_session()
+        try:
+            log = ChatLog(
+                tenant_id=tenant_id,
+                user_id=str(user.id),
+                username=user.username or user.first_name or "Unknown",
+                message_text=message_text,
+                response_text=response_text,
+                intent=intent,
+            )
+            session.add(log)
+            session.commit()
+        except Exception as e:
+            logger.error(f"Error di _log_chat: {e}", exc_info=True)
+            session.rollback()
+        finally:
+            session.close()
+    
     # ============================================================
     # ERROR HANDLER
     # ============================================================
