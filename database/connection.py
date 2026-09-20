@@ -16,6 +16,7 @@ from models.faq import FAQ
 from models.business_hours import BusinessHours
 from models.contact import Contact
 from models.chat_log import ChatLog
+from models.admin import Admin
 
 
 class DatabaseManager:

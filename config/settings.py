@@ -46,6 +46,10 @@ class Settings:
                 "Silakan set di file .env"
             )
         return True
+    
+        # === Flask Web ===
+    FLASK_SECRET_KEY: str = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key-change-this')
+    FLASK_DEBUG: bool = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
 
 
 # Instance settings yang bisa di-import di seluruh software
