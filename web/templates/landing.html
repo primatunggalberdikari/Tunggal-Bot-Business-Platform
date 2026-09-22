@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Prima Tunggal Berdikari</title>
+
+  <!-- ==================== CSS ==================== -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;800&display=swap');
+
+    /* --- 1. VARIABEL WARNA (Light Mode) --- */
+    :root {
+      --bg-body: #eaedf2;
+      --bg-header: #cbd5e1;
+      --bg-card: #f4f6f9;
+      --bg-input: #ffffff;
+      --color-nav-link: #334155;
+      --color-nav-active: #2563eb;
+      --header-shadow: rgba(0, 0, 0, 0.08);
+      --card-shadow: rgba(0, 0, 0, 0.06);
+      --color-text: #1e293b;
+      --color-text-muted: #475569;
+      --color-border: #cbd5e1;
+
+      --logo-prima: #ffffff;
+      --logo-tunggal: #2563eb;
+      --logo-berdikari: #dc2626;
+    }
+
+    /* --- 2. VARIABEL WARNA (Dark Mode) --- */
+    html.dark-mode {
+      --bg-body: #0d0d0d;
+      --bg-header: #18181c;
+      --bg-card: #1e1e24;
+      --bg-input: #121218;
+      --color-nav-link: #94a3b8;
+      --color-nav-active: #60a5fa;
+      --header-shadow: rgba(0, 0, 0, 0.4);
+      --card-shadow: rgba(0, 0, 0, 0.5);
+      --color-text: #cbd5e0;
+      --color-text-muted: #94a3b8;
+      --color-border: #2d2d35;
+
+      --logo-prima: #ffffff;
+      --logo-tunggal: #60a5fa;
+      --logo-berdikari: #f87171;
+    }
+
+    /* --- 3. RESET & DASAR --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--color-text);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+    }
+
+    /* --- 4. HEADER --- */
+    .main-header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 5%;
+      background-color: var(--bg-header);
+      box-shadow: 0 4px 12px var(--header-shadow);
+      z-index: 1000;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .header-center-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .logo-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      gap: 8px;
+    }
+
+    .site-logo {
+      height: 70px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+
+    html.dark-mode .site-logo {
+      filter: brightness(1.1) contrast(1.05);
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .text-prima     { color: var(--logo-prima);     transition: color 0.3s ease; }
+    .text-tunggal   { color: var(--logo-tunggal);   transition: color 0.3s ease; }
+    .text-berdikari { color: var(--logo-berdikari); transition: color 0.3s ease; }
+
+    /* --- Menu Navigasi --- */
+    .nav-menu {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .nav-link {
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--color-nav-link);
+      transition: color 0.2s ease;
+      position: relative;
+      padding: 4px 0;
+      cursor: pointer;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--color-nav-active);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-nav-active);
+      border-radius: 2px;
+    }
+
+    /* --- 5. TOMBOL SAKELAR TEMA --- */
+    .header-right-action {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .theme-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-nav-link);
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, color 0.3s;
+    }
+
+    .theme-btn:hover {
+      background-color: rgba(128, 128, 128, 0.15);
+    }
+
+    .theme-btn svg { width: 22px; height: 22px; }
+
+    html.dark-mode .sun-icon { display: block; }
+    html.dark-mode .moon-icon { display: none; }
+    html:not(.dark-mode) .sun-icon { display: none; }
+    html:not(.dark-mode) .moon-icon { display: block; }
+
+    /* --- 6. AREA KONTEN UTAMA --- */
+    .content-area {
+      padding: 80px 5%;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .content-area h1 {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: -0.3px;
+      max-width: 780px;
+      margin: 0 auto 20px auto;
+      text-wrap: balance;
+      -webkit-text-wrap: balance;
+    }
+
+    .content-area p {
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+      opacity: 0.92;
+    }
+
+    /* --- SECTION SYSTEM (SPA sederhana) --- */
+    .page-section {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================= */
+    /* STYLING KHUSUS HALAMAN PRODUCT                                */
+    /* ============================================================= */
+    .product-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 30px;
+      color: var(--color-text);
+      letter-spacing: -0.3px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      text-align: left;
+    }
+
+    .product-card {
+      background-color: var(--bg-card);
+      border-radius: 14px;
+      padding: 24px 22px;
+      box-shadow: 0 4px 14px var(--card-shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
+      border-left: 4px solid var(--color-nav-active);
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 22px var(--card-shadow);
+    }
+
+    .product-name {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .product-desc {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--color-text-muted);
+      margin-bottom: 14px;
+    }
+
+    .product-price {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--color-nav-active);
+      letter-spacing: 0.3px;
+    }
+
+    /* ============================================================= */
+    /* STYLING KHUSUS HALAMAN CONTACT                                */
+    /* ============================================================= */
+    .contact-subtitle {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-text-muted);
+      max-width: 620px;
+      margin: 0 auto 40px auto;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      background-color: var(--bg-card);
+      border-radius: 14px;
+      box-shadow: 0 4px 14px var(--card-shadow);
+      text-decoration: none;
+      color: var(--color-text);
+      border-left: 4px solid var(--color-nav-active);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
+    }
+
+    .contact-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 22px var(--card-shadow);
+    }
+
+    .contact-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--color-nav-active);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-icon svg { width: 22px; height: 22px; }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      overflow: hidden;
+    }
+
+    .contact-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .contact-value {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--color-text);
+      word-break: break-word;
+    }
+
+    /* ============================================================= */
+    /* STYLING FORM PENDAFTARAN (HALAMAN HOME)                       */
+    /* ============================================================= */
+    .registration-wrapper {
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .registration-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .registration-header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+      color: var(--color-text);
+    }
+
+    .registration-header p {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      max-width: 100%;
+    }
+
+    .reg-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background-color: var(--bg-card);
+      padding: 30px 26px;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px var(--card-shadow);
+      border-top: 4px solid var(--color-nav-active);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--color-text);
+      letter-spacing: 0.3px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group input[type="password"],
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--color-text);
+      background-color: var(--bg-input);
+      border: 1.5px solid var(--color-border);
+      border-radius: 10px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+      outline: none;
+      resize: vertical;
+    }
+
+    .form-group textarea {
+      min-height: 90px;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--color-nav-active);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    html.dark-mode .form-group input:focus,
+    html.dark-mode .form-group textarea:focus {
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--color-text-muted);
+      opacity: 0.7;
+    }
+
+    /* Checkbox */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--color-text);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--color-nav-active);
+      flex-shrink: 0;
+    }
+
+    /* Tombol Aksi */
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 13px 18px;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--color-nav-active);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(128, 128, 128, 0.1);
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 14px;
+      color: var(--color-text-muted);
+    }
+
+    .login-link a {
+      color: var(--color-nav-active);
+      text-decoration: none;
+      font-weight: 800;
+      transition: opacity 0.2s ease;
+    }
+
+    .login-link a:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    /* --- Responsif untuk Tablet & HP --- */
+    @media (max-width: 900px) {
+      .content-area h1 { font-size: 26px; }
+    }
+
+    @media (max-width: 600px) {
+      .main-header { padding: 20px 15px; }
+
+      .header-right-action {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+      }
+
+      .nav-menu { gap: 15px; }
+      .nav-link { font-size: 14px; }
+      .site-logo { height: 55px; }
+
+      .content-area { padding: 50px 20px; }
+      .content-area h1 { font-size: 22px; line-height: 1.3; }
+      .content-area p  { font-size: 15px; }
+
+      .product-title { font-size: 22px; }
+      .product-grid  { grid-template-columns: 1fr; }
+      .product-name  { font-size: 16px; }
+      .product-price { font-size: 16px; }
+
+      .contact-item { padding: 14px 16px; gap: 12px; }
+      .contact-icon { width: 38px; height: 38px; }
+      .contact-icon svg { width: 18px; height: 18px; }
+      .contact-value { font-size: 14px; }
+
+      .registration-header h1 { font-size: 22px; }
+      .reg-form { padding: 22px 18px; }
+      .form-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="header-center-content">
+
+      <a href="#" class="logo-link" onclick="showPage('home', event)">
+        <img
+          src="https://i.ibb.co.com/pjsdyh1k/ptb-logo-removebg-preview.png"
+          alt="Logo PTB Prima Tunggal Berdikari"
+          class="site-logo"
+          onerror="this.onerror=null;this.src='https://i.ibb.co/pjsdyh1k/ptb-logo-removebg-preview.png';"
+        >
+        <div class="logo-text">
+          <span class="text-prima">PRIMA</span>
+          <span class="text-tunggal">TUNGGAL</span>
+          <span class="text-berdikari">BERDIKARI</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="#home"    class="nav-link active" data-page="home"    onclick="showPage('home', event)">Home</a>
+        <a href="#about"   class="nav-link"        data-page="about"   onclick="showPage('about', event)">About</a>
+        <a href="#product" class="nav-link"        data-page="product" onclick="showPage('product', event)">Product</a>
+        <a href="#contact" class="nav-link"        data-page="contact" onclick="showPage('contact', event)">Contact</a>
+      </nav>
+
+    </div>
+
+    <div class="header-right-action">
+      <button id="theme-toggle" class="theme-btn" aria-label="Ubah Tema">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="content-area">
+
+    <!-- ================= HALAMAN: HOME (SEKARANG: FORM PENDAFTARAN) ================= -->
+    <section id="page-home" class="page-section active">
+      <div class="registration-wrapper">
+
+        <div class="registration-header">
+          <h1>FORM PENDAFTARAN</h1>
+          <p>Silakan isi data diri Anda dengan lengkap</p>
+        </div>
+
+        <form class="reg-form" action="#" method="post">
+
+          <div class="form-group">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="contoh@email.com">
+          </div>
+
+          <div class="form-group">
+            <label for="hp">Nomor HP</label>
+            <input type="tel" id="hp" name="hp" placeholder="08xxxxxxxxxx">
+          </div>
+
+          <div class="form-group">
+            <label for="alamat">Alamat</label>
+            <textarea id="alamat" name="alamat" placeholder="Jl. Contoh No. 123, Kelurahan, Kecamatan, Kota"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Minimal 8 karakter">
+          </div>
+
+          <div class="form-group">
+            <label for="konfirmasi_password">Konfirmasi Password</label>
+            <input type="password" id="konfirmasi_password" name="konfirmasi_password" placeholder="Ulangi password">
+          </div>
+
+          <label class="checkbox-group">
+            <input type="checkbox" name="syarat">
+            <span>Saya menyetujui syarat &amp; ketentuan</span>
+          </label>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">DAFTAR SEKARANG</button>
+            <button type="reset"  class="btn btn-secondary">RESET</button>
+          </div>
+
+        </form>
+
+        <p class="login-link">Sudah punya akun? <a href="#">Login di sini</a></p>
+
+      </div>
+    </section>
+
+    <!-- ================= HALAMAN: ABOUT ================= -->
+    <section id="page-about" class="page-section">
+      <h1>“Software Lokal dengan Inovasi Global”</h1>
+      <h2>Tentang Kami</h2>
+      <p>Prima Tunggal Berdikari adalah tim pengembang software lokal yang berfokus pada solusi berbasis kecerdasan buatan (AI) untuk membantu bisnis dan individu di Indonesia. Kami percaya bahwa teknologi global dapat diadaptasi menjadi produk lokal yang tepat guna, mudah digunakan, dan terjangkau.</p>
+    </section>
+
+    <!-- ================= HALAMAN: PRODUCT ================= -->
+    <section id="page-product" class="page-section">
+      <h2 class="product-title">Daftar Produk Kami:</h2>
+
+      <div class="product-grid">
+
+        <div class="product-card">
+          <div class="product-name">📦 AI Assistant Telegram</div>
+          <div class="product-desc">Bot AI otomatis 24 jam untuk Telegram</div>
+          <div class="product-price">Rp150,000</div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-name">📦 AI Assistant WhatsApp</div>
+          <div class="product-desc">Balas otomatis WA dengan AI</div>
+          <div class="product-price">Rp150,000</div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-name">📦 Paket Combo Telegram + WhatsApp</div>
+          <div class="product-desc">Semua fitur AI di kedua platform</div>
+          <div class="product-price">Rp200,000</div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-name">📦 Building Discord Server</div>
+          <div class="product-desc">Server Discord siap pakai dengan bot AI</div>
+          <div class="product-price">Rp150,000</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= HALAMAN: CONTACT ================= -->
+    <section id="page-contact" class="page-section">
+      <h1>Hubungi Kami</h1>
+      <p class="contact-subtitle">
+        Punya pertanyaan tentang produk atau ingin bekerja sama?
+        Tim kami siap membantu Anda melalui salah satu saluran berikut.
+      </p>
+
+      <div class="contact-list">
+
+        <a class="contact-item" href="https://wa.me/6288294689521" target="_blank" rel="noopener">
+          <div class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 2C6.495 2 2 6.495 2 12.05c0 1.774.464 3.44 1.277 4.885L2 22l5.193-1.259A9.998 9.998 0 0 0 12.05 22C17.605 22 22.1 17.505 22.1 11.95 22.1 6.395 17.605 2 12.05 2z"/>
+            </svg>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">WhatsApp</span>
+            <span class="contact-value">0882-9468-9521</span>
+          </div>
+        </a>
+
+        <a class="contact-item" href="mailto:primatunggalberdikari@gmail.com">
+          <div class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">Email</span>
+            <span class="contact-value">primatunggalberdikari@gmail.com</span>
+          </div>
+        </a>
+
+        <a class="contact-item" href="https://t.me/prima_tunggal_bot" target="_blank" rel="noopener">
+          <div class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">Telegram</span>
+            <span class="contact-value">@prima_tunggal_bot</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    /* ---------- 1. Fungsi Navigasi Halaman (SPA) ---------- */
+    function showPage(pageName, event) {
+      if (event) event.preventDefault();
+
+      const sections = document.querySelectorAll('.page-section');
+      sections.forEach(sec => sec.classList.remove('active'));
+
+      const target = document.getElementById('page-' + pageName);
+      if (target) target.classList.add('active');
+
+      const links = document.querySelectorAll('.nav-link');
+      links.forEach(link => {
+        link.classList.toggle('active', link.dataset.page === pageName);
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ---------- 2. Sakelar Tema ---------- */
+    const toggleButton = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+      htmlElement.classList.add('dark-mode');
+    } else if (savedTheme === 'light') {
+      htmlElement.classList.remove('dark-mode');
+    } else {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        htmlElement.classList.add('dark-mode');
+      }
+    }
+
+    toggleButton.addEventListener('click', () => {
+      htmlElement.classList.toggle('dark-mode');
+
+      if (htmlElement.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+      } else {
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    /* ---------- 3. Auto-load halaman dari URL hash ---------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && document.getElementById('page-' + hash)) {
+        showPage(hash);
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -23,12 +23,8 @@ def create_app() -> Flask:
     app.config['SECRET_KEY'] = settings.FLASK_SECRET_KEY or 'dev-secret-key-change-in-production'
     app.config['DEBUG'] = settings.DEBUG
     
-    # Register blueprint (nanti)
-    # from .routes.auth import auth_bp
-    # app.register_blueprint(auth_bp)
-    
-    @app.route('/')
-    def index():
-        return "Tunggal Bot Dashboard - Coming Soon!"
+    # Register blueprint
+    from web.routes.main import main_bp
+    app.register_blueprint(main_bp)
     
     return app

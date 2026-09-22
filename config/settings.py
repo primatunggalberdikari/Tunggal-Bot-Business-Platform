@@ -28,7 +28,7 @@ class Settings:
     # === SYSTEM DATABASE === #
     DATABASE_URL: str = os.getenv('DATABASE_URL', f'sqlite:///{BASE_DIR}/tunggal_bot.db')
 
-        # === Flask Web ===
+    # === Flask Web ===
     FLASK_SECRET_KEY: str = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key-change-this')
     FLASK_DEBUG: bool = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
 
