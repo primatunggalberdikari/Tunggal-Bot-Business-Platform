@@ -45429,3 +45429,14 @@ WHERE faqs.tenant_id = ? AND faqs.is_active = 1 ORDER BY faqs."order"
 2026-09-19 17:04:08,973 - httpcore.connection - DEBUG - close.complete
 2026-09-19 17:04:08,974 - telegram.ext.ExtBot - DEBUG - This Bot is already shut down. Returning.
 2026-09-19 17:04:08,974 - telegram.ext.Updater - DEBUG - Shut down of Updater complete
+2026-09-22 16:42:37,968 - __main__ - INFO - Tunggal Bot Business Platform v1.0.0
+2026-09-22 16:42:37,970 - __main__ - INFO - Mode: development
+2026-09-22 16:42:37,970 - __main__ - INFO - Debug: True
+2026-09-22 16:42:37,971 - __main__ - INFO - [OK] Konfigurasi valid
+2026-09-22 16:42:37,972 - bot.handler - INFO - Memulai bot Telegram...
+2026-09-22 16:42:41,341 - telegram.ext.ExtBot - DEBUG - Set Bot API URL: https://api.telegram.org/bot8619539486:AAHeIsBd3uLxehmBNu2MznOWGGuqAxvv6HY
+2026-09-22 16:42:41,342 - telegram.ext.ExtBot - DEBUG - Set Bot API File URL: https://api.telegram.org/file/bot8619539486:AAHeIsBd3uLxehmBNu2MznOWGGuqAxvv6HY
+2026-09-22 16:42:41,348 - bot.handler - INFO - Bot mulai polling...
+2026-09-22 16:42:41,349 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-09-22 16:42:41,641 - __main__ - INFO -  Bot dihentikan oleh user
+2026-09-22 16:42:41,641 - bot.handler - WARNING - Bot tidak sedang berjalan!

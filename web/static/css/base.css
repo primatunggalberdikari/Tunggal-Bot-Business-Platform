@@ -1,0 +1,249 @@
+/* ============================================================ */
+/* BASE CSS — Global Styles untuk Semua Halaman                */
+/* ============================================================ */
+
+/* --- Reset --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Variables (Light Mode) --- */
+:root {
+  --bg-body: #eaedf2;
+  --bg-header: #cbd5e1;
+  --bg-card: #f4f6f9;
+  --bg-input: #ffffff;
+  --color-nav-link: #334155;
+  --color-nav-active: #2563eb;
+  --header-shadow: rgba(0, 0, 0, 0.08);
+  --card-shadow: rgba(0, 0, 0, 0.06);
+  --color-text: #1e293b;
+  --color-text-muted: #475569;
+  --color-border: #cbd5e1;
+  --logo-prima: #ffffff;
+  --logo-tunggal: #2563eb;
+  --logo-berdikari: #dc2626;
+}
+
+/* --- Variables (Dark Mode) --- */
+html.dark-mode {
+  --bg-body: #0d0d0d;
+  --bg-header: #18181c;
+  --bg-card: #1e1e24;
+  --bg-input: #121218;
+  --color-nav-link: #94a3b8;
+  --color-nav-active: #60a5fa;
+  --header-shadow: rgba(0, 0, 0, 0.4);
+  --card-shadow: rgba(0, 0, 0, 0.5);
+  --color-text: #cbd5e0;
+  --color-text-muted: #94a3b8;
+  --color-border: #2d2d35;
+  --logo-prima: #ffffff;
+  --logo-tunggal: #60a5fa;
+  --logo-berdikari: #f87171;
+}
+
+/* --- Body --- */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--bg-body);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Header --- */
+.main-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 5%;
+  background-color: var(--bg-header);
+  box-shadow: 0 4px 12px var(--header-shadow);
+  z-index: 1000;
+}
+
+.header-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.logo-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  gap: 8px;
+}
+
+.site-logo {
+  height: 70px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+html.dark-mode .site-logo {
+  filter: brightness(1.1) contrast(1.05);
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  display: flex;
+  gap: 6px;
+}
+
+.text-prima     { color: var(--logo-prima); }
+.text-tunggal   { color: var(--logo-tunggal); }
+.text-berdikari { color: var(--logo-berdikari); }
+
+/* --- Navigasi --- */
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.nav-link {
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--color-nav-link);
+  transition: color 0.2s ease;
+  padding: 4px 0;
+}
+
+.nav-link:hover {
+  color: var(--color-nav-active);
+}
+
+/* --- Theme Toggle Button --- */
+.header-right-action {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.theme-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-nav-link);
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.theme-btn:hover {
+  background-color: rgba(128, 128, 128, 0.15);
+}
+
+.theme-btn svg { width: 22px; height: 22px; }
+
+html.dark-mode .sun-icon { display: block; }
+html.dark-mode .moon-icon { display: none; }
+html:not(.dark-mode) .sun-icon { display: none; }
+html:not(.dark-mode) .moon-icon { display: block; }
+
+/* --- Main Content Area --- */
+.content-area {
+  flex: 1;
+  padding: 60px 5%;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --- Flash Messages --- */
+.flash-container {
+  max-width: 900px;
+  margin: 20px auto 0;
+  padding: 0 5%;
+}
+
+.flash-message {
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.flash-success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border-left: 4px solid #10b981;
+}
+
+.flash-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-left: 4px solid #ef4444;
+}
+
+.flash-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border-left: 4px solid #3b82f6;
+}
+
+html.dark-mode .flash-success {
+  background-color: #064e3b;
+  color: #d1fae5;
+}
+
+html.dark-mode .flash-error {
+  background-color: #7f1d1d;
+  color: #fee2e2;
+}
+
+html.dark-mode .flash-info {
+  background-color: #1e3a8a;
+  color: #dbeafe;
+}
+
+/* --- Footer --- */
+.main-footer {
+  text-align: center;
+  padding: 24px 5%;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+}
+
+.main-footer strong {
+  color: var(--color-text);
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  .main-header { padding: 20px 15px; }
+
+  .header-right-action {
+    position: static;
+    transform: none;
+    margin-top: 10px;
+  }
+
+  .nav-menu { gap: 15px; }
+  .nav-link { font-size: 14px; }
+  .site-logo { height: 55px; }
+
+  .content-area { padding: 40px 20px; }
+}

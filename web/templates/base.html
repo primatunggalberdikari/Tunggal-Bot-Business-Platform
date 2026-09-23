@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Prima Tunggal Berdikari{% endblock %}</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;800&display=swap" rel="stylesheet">
+
+  <!-- Base CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+
+  <!-- Block untuk CSS tambahan per halaman -->
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="main-header">
+    <div class="header-center-content">
+
+      <a href="{{ url_for('main.landing') }}" class="logo-link">
+        <img
+          src="https://i.ibb.co.com/pjsdyh1k/ptb-logo-removebg-preview.png"
+          alt="Logo PTB Prima Tunggal Berdikari"
+          class="site-logo"
+        >
+        <div class="logo-text">
+          <span class="text-prima">PRIMA</span>
+          <span class="text-tunggal">TUNGGAL</span>
+          <span class="text-berdikari">BERDIKARI</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="#" class="nav-link active" data-page="home">Home</a>
+        <a href="#" class="nav-link" data-page="about">About</a>
+        <a href="#" class="nav-link" data-page="product">Product</a>
+        <a href="#" class="nav-link" data-page="contact">Contact</a>
+      </nav>
+
+    </div>
+
+    <div class="header-right-action">
+      <button id="theme-toggle" class="theme-btn" aria-label="Ubah Tema">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== FLASH MESSAGES ==================== -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for category, message in messages %}
+          <div class="flash-message flash-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="content-area">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="main-footer">
+    <p>&copy; 2026 <strong>PRIMA TUNGGAL BERDIKARI</strong> — Software Lokal dengan Inovasi Global</p>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+
+</body>
+</html>
