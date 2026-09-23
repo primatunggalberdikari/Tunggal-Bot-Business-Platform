@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Prima Tunggal Berdikari{% endblock %}
+
+{% block content %}
+
+<div style="text-align:center;padding:40px 0;">
+  <h1 style="font-size:32px;font-weight:800;margin-bottom:20px;">
+    PRIMA TUNGGAL BERDIKARI
+  </h1>
+  <p style="font-size:18px;color:var(--color-text-muted);margin-bottom:30px;">
+    Selamat datang diwebsite resmi Prima Tunggal Berdikari, <strong>{{ username }}</strong>!
+  </p>
+
+  <div style="max-width:600px;margin:0 auto;padding:30px;background:var(--bg-card);border-radius:16px;box-shadow:0 4px 18px var(--card-shadow);">
+    <p style="margin-bottom:20px;">
+      Ini halaman dashboard sementara. Nanti kita akan tambahkan:
+    </p>
+    <ul style="text-align:left;list-style:none;padding:0;">
+      <li style="padding:10px 0;border-bottom:1px solid var(--color-border);">📦 CRUD Produk</li>
+      <li style="padding:10px 0;border-bottom:1px solid var(--color-border);">❓ CRUD FAQ</li>
+      <li style="padding:10px 0;border-bottom:1px solid var(--color-border);">🕐 CRUD Jam Operasional</li>
+      <li style="padding:10px 0;border-bottom:1px solid var(--color-border);">📱 CRUD Kontak</li>
+      <li style="padding:10px 0;">📊 Statistik Percakapan</li>
+    </ul>
+  </div>
+
+  <div style="margin-top:30px;">
+    <a href="{{ url_for('auth.logout') }}" style="display:inline-block;padding:12px 24px;background:var(--color-nav-active);color:#fff;text-decoration:none;border-radius:10px;font-weight:800;">
+      Logout
+    </a>
+  </div>
+</div>
+
+{% endblock %}

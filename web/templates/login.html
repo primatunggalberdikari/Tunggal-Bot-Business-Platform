@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Prima Tunggal Berdikari{% endblock %}
+
+{% block extra_css %}
+<style>
+  .login-wrapper {
+    max-width: 420px;
+    margin: 40px auto;
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .login-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--color-text);
+  }
+
+  .login-header p {
+    font-size: 15px;
+    color: var(--color-text-muted);
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background-color: var(--bg-card);
+    padding: 32px 28px;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px var(--card-shadow);
+    border-top: 4px solid var(--color-nav-active);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-text);
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--color-text);
+    background-color: var(--bg-input);
+    border: 1.5px solid var(--color-border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .form-group input:focus {
+    border-color: var(--color-nav-active);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--color-nav-active);
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 800;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+    background-color: var(--color-nav-active);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.2s;
+  }
+
+  .btn-login:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+  }
+
+  .helper-links {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 14px;
+    color: var(--color-text-muted);
+  }
+
+  .helper-links a {
+    color: var(--color-nav-active);
+    text-decoration: none;
+    font-weight: 800;
+    margin: 0 6px;
+  }
+
+  .helper-links a:hover {
+    text-decoration: underline;
+  }
+
+  .test-credentials {
+    margin-top: 20px;
+    padding: 14px 18px;
+    background-color: rgba(37, 99, 235, 0.08);
+    border-left: 4px solid var(--color-nav-active);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+
+  .test-credentials strong {
+    color: var(--color-nav-active);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="login-wrapper">
+
+  <div class="login-header">
+    <h1>Login Akun</h1>
+    <p>Masuk kedalam akun PTB Anda</p>
+  </div>
+
+  <form class="login-form" action="{{ url_for('auth.login') }}" method="post">
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Masukkan username"
+        required
+        autofocus
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Masukkan password"
+        required
+      >
+    </div>
+
+    <label class="checkbox-group">
+      <input type="checkbox" name="remember">
+      <span>Ingat saya</span>
+    </label>
+
+    <button type="submit" class="btn-login">MASUK</button>
+
+  </form>
+
+  <div class="helper-links">
+    Belum punya akun? <a href="{{ url_for('main.landing') }}">Daftar di sini</a>
+  </div>
+
+  <div class="test-credentials">
+    <strong>Untuk testing:</strong><br>
+    Username: <code>admin</code> | Password: <code>admin123</code>
+  </div>
+
+</div>
+
+{% endblock %}
