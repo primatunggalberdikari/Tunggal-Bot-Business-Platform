@@ -21,3 +21,33 @@ karena file .env berisi kode rahasia sebuah aplikasi dan tidak boleh disebarluas
 
 ## 12. Apa yang harus dilakukan jika token sudah terlanjur ter-push?
 harus melakukan revoke pada botfather atau lainnya untuk menonaktifkan kode token yang lama dan memperbarui kode token yang baru 
+
+## 13. Apa yang saya pelajari hari ini tentang session di web?
+
+session web berfungsi untuk memberikan tahapan pembangunan fondasi web untuk pemula terutama bagian login dan akun agar tidak mudah tersebar atau menjaga privasi
+
+## 14. Apa perbedaan "dummy auth" dan "database auth"?
+
+dummy auth: berfungsi sebagai data akun atau file pancingan untuk tes bug atau tes kompabilitas login
+database auth: berfungsi sebagai data akun asli untuk implementasi langsung kode file data kedalam kompabilitas login
+
+## 15. Apa yang masih membingungkan dari kode hari ini?
+
+mungkin ada tetapi saya tidak tahu itu apa dan akan saya baca ulang nanti
+
+
+## 16. Apa perbedaan dummy auth dan database auth?
+
+dummy auth: sebagai autentikasi data palsu atau data umpan sebagai maintenance atau debugging
+
+## 17. Apa fungsi password hashing dan mengapa penting?
+
+berfungsi mengubah password asli menjadi kode angka atau huruf acak yang panjang agar tidak ada duplikasi oleh oknum yang tidak bertanggug jawab dan sangat penting untuk menjaga data tetap privacy dan aman serta tidak bocor atau tersebar kesemua user
+
+## 18. Bagaimana session menyimpan data admin yang login?
+
+saya belum paham tentang hal ini
+
+## 19. Apa yang masih membingungkan dari materi hari ini?
+
+mungkin ada tetapi saya tidak tahu itu apa dan akan saya baca ulang nanti

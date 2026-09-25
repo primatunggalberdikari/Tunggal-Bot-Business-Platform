@@ -1,25 +1,34 @@
 # Changelog
 
-## [2.0.0-dev] - 2026-09-23
+## [2.0.0-dev] - 2026-09-25
 ### Added
 - Landing page dengan template inheritance (`base.html`)
-- Halaman login admin dengan session management
+- Halaman login admin dengan database authentication
 - Halaman dashboard admin (sederhana)
 - Static files management (`base.css`, `base.js`)
 - Flash messages untuk notifikasi
 - Navbar dinamis (login/logout state)
 - Route `/login`, `/logout`, `/dashboard`
 - Blueprint `auth_bp` untuk autentikasi
-- Kredensial dummy (admin/admin123) untuk testing
+- Database seed untuk admin pertama
+- Password hashing dengan scrypt (werkzeug)
+- Helper function `get_admin_by_username()`
+- Session management (user, admin_id, tenant_id, is_super_admin)
+- Auto-hide flash messages (5 detik)
+- Show/hide password toggle
+- Conditional DEBUG mode untuk kredensial test
 
 ### Changed
 - Refactor `landing.html` — extends `base.html`
 - Hapus folder root `templates/` (bersih)
 - Update `web/__init__.py` — register `auth_bp`
+- Ganti dummy auth → database auth
 
 ### Security
+- Password di-hash dengan scrypt
 - Session-based authentication
-- Password akan di-hash (persiapan V3.0)
+- Cek admin `is_active` sebelum login
+- Conditional test credentials (hanya di DEBUG mode)
 
 ## [1.1.0] - 2026-09-19
 ### Added
