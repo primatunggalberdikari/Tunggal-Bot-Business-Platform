@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.0.1] - 2026-09-26
+### Added
+- CRUD Produk lengkap (Create, Read, Update, Delete)
+- Halaman Daftar Produk (`/products/`) dengan card layout
+- Form Tambah Produk (`/products/new`) — universal template
+- Form Edit Produk (`/products/<id>/edit`)
+- Hapus Produk (`/products/<id>/delete`) — POST + konfirmasi
+- Blueprint `products_bp` untuk modular routing
+- Helper functions `get_current_tenant_id()`, `require_login()`
+- Konfirmasi hapus dengan JavaScript
+- Update Dashboard dengan statistik (produk, chat)
+- Navbar dinamis (Produk, Dashboard, Logout)
+- Empty state untuk list produk kosong
+
+### Security
+- Filter double (id + tenant_id) di edit dan delete
+- POST method untuk hapus (cegah CSRF/prefetch)
+- Validasi input di form produk
+
+### Changed
+- Dashboard tidak lagi placeholder — ada statistik
+- Navbar link "Produk" muncul saat login
+
 ## [2.0.0-dev] - 2026-09-25
 ### Added
 - Landing page dengan template inheritance (`base.html`)

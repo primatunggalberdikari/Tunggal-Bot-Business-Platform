@@ -113,7 +113,8 @@ html.dark-mode .site-logo {
 .nav-menu {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .nav-link {
@@ -123,6 +124,7 @@ html.dark-mode .site-logo {
   color: var(--color-nav-link);
   transition: color 0.2s ease;
   padding: 4px 0;
+  white-space: nowrap;
 }
 
 .nav-link:hover {

@@ -23,10 +23,12 @@ def create_app() -> Flask:
     app.config['SECRET_KEY'] = settings.FLASK_SECRET_KEY or 'dev-secret-key-change-in-production'
     app.config['DEBUG'] = settings.DEBUG
     
-     # Register blueprint
+    # Register blueprint
     from web.routes.main import main_bp
-    from web.routes.auth import auth_bp       
+    from web.routes.auth import auth_bp
+    from web.routes.products import products_bp
     app.register_blueprint(main_bp)
-    app.register_blueprint(auth_bp)          
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(products_bp, url_prefix='/products')       
     
     return app

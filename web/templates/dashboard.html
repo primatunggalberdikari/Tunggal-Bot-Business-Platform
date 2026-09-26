@@ -2,34 +2,149 @@
 
 {% block title %}Dashboard - Prima Tunggal Berdikari{% endblock %}
 
+{% block extra_css %}
+<style>
+  .dashboard-wrapper {
+    max-width: 900px;
+    margin: 20px auto;
+  }
+
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--color-text);
+  }
+
+  .dashboard-header p {
+    font-size: 16px;
+    color: var(--color-text-muted);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .stat-card {
+    background-color: var(--bg-card);
+    border-radius: 14px;
+    padding: 24px 22px;
+    box-shadow: 0 4px 14px var(--card-shadow);
+    border-left: 4px solid var(--color-nav-active);
+    text-align: center;
+  }
+
+  .stat-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-nav-active);
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+
+  .menu-card {
+    background-color: var(--bg-card);
+    border-radius: 14px;
+    padding: 24px 22px;
+    box-shadow: 0 4px 14px var(--card-shadow);
+  }
+
+  .menu-card h3 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: var(--color-text);
+  }
+
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background-color: var(--bg-input);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: transform 0.15s, background-color 0.2s;
+    border-left: 3px solid var(--color-nav-active);
+  }
+
+  .menu-item:hover {
+    transform: translateX(4px);
+    background-color: var(--bg-body);
+  }
+
+  .menu-item-icon {
+    font-size: 20px;
+  }
+
+  .menu-item-text {
+    font-weight: 600;
+    font-size: 14px;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div style="text-align:center;padding:40px 0;">
-  <h1 style="font-size:32px;font-weight:800;margin-bottom:20px;">
-    PRIMA TUNGGAL BERDIKARI
-  </h1>
-  <p style="font-size:18px;color:var(--color-text-muted);margin-bottom:30px;">
-  Selamat datang di website resmi Prima Tunggal Berdikari, <strong>{{ admin.full_name }}</strong>!
-  </p>
+<div class="dashboard-wrapper">
 
-  <div style="max-width:600px;margin:0 auto;padding:30px;background:var(--bg-card);border-radius:16px;box-shadow:0 4px 18px var(--card-shadow);">
-    <p style="margin-bottom:20px;">
-      Ini halaman dashboard sementara. Nanti kita akan tambahkan:
-    </p>
-    <ul style="text-align:left;list-style:none;padding:0;">
-      <li style="padding:10px 0;border-bottom:1px solid var(--color-border);">📦 CRUD Produk</li>
-      <li style="padding:10px 0;border-bottom:1px solid var(--color-border);">❓ CRUD FAQ</li>
-      <li style="padding:10px 0;border-bottom:1px solid var(--color-border);">🕐 CRUD Jam Operasional</li>
-      <li style="padding:10px 0;border-bottom:1px solid var(--color-border);">📱 CRUD Kontak</li>
-      <li style="padding:10px 0;">📊 Statistik Percakapan</li>
-    </ul>
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Selamat datang, <strong>{{ admin.full_name }}</strong>!</p>
   </div>
 
-  <div style="margin-top:30px;">
-    <a href="{{ url_for('auth.logout') }}" style="display:inline-block;padding:12px 24px;background:var(--color-nav-active);color:#fff;text-decoration:none;border-radius:10px;font-weight:800;">
-      Logout
-    </a>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">📦</div>
+      <div class="stat-value">{{ stats.product_count }}</div>
+      <div class="stat-label">Produk</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">💬</div>
+      <div class="stat-value">{{ stats.chat_count }}</div>
+      <div class="stat-label">Percakapan</div>
+    </div>
   </div>
+
+  <div class="menu-card">
+    <h3>Menu Cepat</h3>
+    <div class="menu-list">
+      <a href="{{ url_for('products.list_products') }}" class="menu-item">
+        <span class="menu-item-icon">📦</span>
+        <span class="menu-item-text">Kelola Produk</span>
+      </a>
+      <a href="{{ url_for('products.new_product') }}" class="menu-item">
+        <span class="menu-item-icon">➕</span>
+        <span class="menu-item-text">Tambah Produk Baru</span>
+      </a>
+    </div>
+  </div>
+
 </div>
 
 {% endblock %}

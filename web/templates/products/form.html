@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Prima Tunggal Berdikari{% endblock %}
+
+{% block extra_css %}
+<style>
+  .form-wrapper {
+    max-width: 600px;
+    margin: 40px auto;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .form-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--color-text);
+  }
+
+  .form-header p {
+    font-size: 15px;
+    color: var(--color-text-muted);
+  }
+
+  .product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background-color: var(--bg-card);
+    padding: 32px 28px;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px var(--card-shadow);
+    border-top: 4px solid var(--color-nav-active);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-text);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--color-text);
+    background-color: var(--bg-input);
+    border: 1.5px solid var(--color-border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--color-nav-active);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 13px 18px;
+    font-size: 14px;
+    font-weight: 800;
+    font-family: inherit;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 0.15s, opacity 0.2s;
+  }
+
+  .btn-primary {
+    background-color: var(--color-nav-active);
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-text);
+    border: 1.5px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+  }
+
+  @media (max-width: 600px) {
+    .form-header h1 { font-size: 22px; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-actions { flex-direction: column; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="form-wrapper">
+
+  <div class="form-header">
+    <h1>{{ title }}</h1>
+    <p>{{ subtitle }}</p>
+  </div>
+
+  <form class="product-form" method="post" action="{{ form_action }}">
+
+    <div class="form-group">
+      <label for="name">Nama Produk *</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Contoh: Sepatu Nike Air Max"
+        value="{{ product.name if product else '' }}"
+        required
+        autofocus
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="description">Deskripsi</label>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Deskripsi singkat produk"
+      >{{ product.description if product else '' }}</textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="price">Harga (Rp) *</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          placeholder="150000"
+          value="{{ product.price if product else '' }}"
+          min="0"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Stok</label>
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          placeholder="10"
+          value="{{ product.stock if product else 0 }}"
+          min="0"
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Kategori</label>
+      <input
+        type="text"
+        id="category"
+        name="category"
+        placeholder="Contoh: Sepatu, Elektronik, Makanan"
+        value="{{ product.category if product else '' }}"
+      >
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">{{ submit_label }}</button>
+      <a href="{{ url_for('products.list_products') }}" class="btn btn-secondary">Batal</a>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

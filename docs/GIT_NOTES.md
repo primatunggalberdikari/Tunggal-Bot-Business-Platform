@@ -39,6 +39,7 @@ mungkin ada tetapi saya tidak tahu itu apa dan akan saya baca ulang nanti
 ## 16. Apa perbedaan dummy auth dan database auth?
 
 dummy auth: sebagai autentikasi data palsu atau data umpan sebagai maintenance atau debugging
+database auth: sebagai autentikasi data asli yang diubah menjadi kode unik dalam bentuk angka acak yang panjang agar data tetap aman dari duplikasi
 
 ## 17. Apa fungsi password hashing dan mengapa penting?
 
@@ -51,3 +52,24 @@ saya belum paham tentang hal ini
 ## 19. Apa yang masih membingungkan dari materi hari ini?
 
 mungkin ada tetapi saya tidak tahu itu apa dan akan saya baca ulang nanti
+
+
+## 20. Apa yang saya pelajari tentang CRUD hari ini?
+
+CRUD singkatan dari Create Read Update Delete yang berfungsi sebagai tools bawaan untuk user yang akan membuat, membaca(cek perlengkapan), memperbarui data dan menghapus permanen pada data
+
+## 21. Apa fungsi filter `tenant_id` di setiap query produk?
+
+tenant_id berfungsi sebagai blokade antara data klien 1 dengan klien 2 agar tidak saling mengambil data satu sama lain
+
+## 22. Kenapa hapus produk pakai POST, bukan GET?
+
+memakai post cenderung lebih aman karena data tidak tersimpan pada website dan get sangat beresiko karena data user akan tersimpan kedalam bookmark atau cache yang memungkinkan deleting by human error
+
+## 23. Apa bedanya "template universal" untuk tambah & edit?
+
+template universal berfungsi sebagai DRY (Don't Repeat Yourself) yaitu tidak update ulang secara manual alias satu kali update semua akan baru
+
+## 24. Apa yang masih membingungkan dari materi CRUD?
+
+tidak ada

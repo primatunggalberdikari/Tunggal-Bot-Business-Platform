@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}Daftar Produk - Prima Tunggal Berdikari{% endblock %}
+
+{% block extra_css %}
+<style>
+  .list-wrapper {
+    max-width: 900px;
+    margin: 20px auto;
+  }
+
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .list-header-text h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 6px;
+  }
+
+  .list-header-text p {
+    font-size: 15px;
+    color: var(--color-text-muted);
+  }
+
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: var(--color-nav-active);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    transition: transform 0.15s, opacity 0.2s;
+  }
+
+  .btn-add:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .product-card {
+    background-color: var(--bg-card);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 14px var(--card-shadow);
+    border-left: 4px solid var(--color-nav-active);
+    transition: transform 0.2s;
+  }
+
+  .product-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .product-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 6px;
+  }
+
+  .product-desc {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    min-height: 40px;
+  }
+
+  .product-meta {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin-bottom: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .product-price {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--color-nav-active);
+    margin-bottom: 4px;
+  }
+
+  .product-stock {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+
+  .product-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .btn-action {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 800;
+    font-family: inherit;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-edit {
+    background-color: var(--color-nav-active);
+    color: #ffffff;
+  }
+
+  .btn-edit:hover {
+    opacity: 0.85;
+  }
+
+  .btn-delete {
+    background-color: #dc2626;
+    color: #ffffff;
+  }
+
+  .btn-delete:hover {
+    opacity: 0.85;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: 0 4px 14px var(--card-shadow);
+  }
+
+  .empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .empty-state h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 8px;
+  }
+
+  .empty-state p {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .list-header-text h1 { font-size: 22px; }
+    .product-grid { grid-template-columns: 1fr; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="list-wrapper">
+
+  <div class="list-header">
+    <div class="list-header-text">
+      <h1>Daftar Produk</h1>
+      <p>Kelola produk untuk usaha Anda</p>
+    </div>
+    <a href="{{ url_for('products.new_product') }}" class="btn-add">
+      ➕ Tambah Produk
+    </a>
+  </div>
+
+  {% if products %}
+
+    <div class="product-grid">
+      {% for product in products %}
+        <div class="product-card">
+          <div class="product-name">{{ product.name }}</div>
+          <div class="product-desc">
+            {{ product.description or 'Tidak ada deskripsi' }}
+          </div>
+
+          <div class="product-meta">
+            <div class="product-price">Rp{{ "{:,.0f}".format(product.price) }}</div>
+            <div class="product-stock">
+              📦 Stok: {{ product.stock }}
+              {% if product.category %}
+                • {{ product.category }}
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="product-actions">
+            <a href="{{ url_for('products.edit_product', product_id=product.id) }}" class="btn-action btn-edit">✏️ Edit</a>
+            <form method="post" 
+                  action="{{ url_for('products.delete_product', product_id=product.id) }}" 
+                  style="flex:1;" 
+                  onsubmit="return confirm('Yakin hapus produk &quot;{{ product.name }}&quot;?');">
+              <button type="submit" class="btn-action btn-delete" style="width:100%;">🗑️ Hapus</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  {% else %}
+
+    <div class="empty-state">
+      <div class="empty-state-icon">📦</div>
+      <h2>Belum Ada Produk</h2>
+      <p>Mulai tambahkan produk pertama Anda.</p>
+      <a href="{{ url_for('products.new_product') }}" class="btn-add">
+        ➕ Tambah Produk Pertama
+      </a>
+    </div>
+
+  {% endif %}
+
+</div>
+
+{% endblock %}

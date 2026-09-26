@@ -116,12 +116,11 @@ def logout():
 @auth_bp.route('/dashboard')
 def dashboard():
     """Halaman dashboard admin."""
-    # Cek login
     if not session.get('user'):
         flash('Silakan login terlebih dahulu.', 'error')
         return redirect(url_for('auth.login'))
 
-    # Kirim data admin ke template
+    # Ambil data admin dari session
     admin_data = {
         'username': session.get('user'),
         'full_name': session.get('full_name'),
@@ -129,4 +128,27 @@ def dashboard():
         'tenant_id': session.get('tenant_id'),
     }
 
-    return render_template('dashboard.html', admin=admin_data)
+    # Query stats: jumlah produk
+    from database.connection import db_manager
+    from models.product import Product
+    from models.chat_log import ChatLog
+
+    tenant_id = session.get('tenant_id')
+    session_db = db_manager.get_session()
+    try:
+        product_count = session_db.query(Product).filter(
+            Product.tenant_id == tenant_id
+        ).count()
+
+        chat_count = session_db.query(ChatLog).filter(
+            ChatLog.tenant_id == tenant_id
+        ).count()
+    finally:
+        session_db.close()
+
+    stats = {
+        'product_count': product_count,
+        'chat_count': chat_count,
+    }
+
+    return render_template('dashboard.html', admin=admin_data, stats=stats)
